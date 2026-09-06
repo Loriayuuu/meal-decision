@@ -202,7 +202,8 @@
       $('winner').textContent = '';
     }
     $('run').addEventListener('click', render);
-    $('spin').addEventListener('click', () => { const wheel=$('wheel'), spin=$('spin'); spin.disabled=true; $('winner').textContent='正在替你拍板...'; const index=Math.floor(Math.random()*options.length); wheel.style.transform=`rotate(${1440 + index*45 + Math.floor(Math.random()*30)}deg)`; setTimeout(()=>{ $('winner').textContent=`今天就吃：${options[index]}`; spin.disabled=false; },4300); });
+    let wheelRotation = 0;
+    $('spin').addEventListener('click', () => { const wheel=$('wheel'), spin=$('spin'); spin.disabled=true; $('winner').textContent='正在替你拍板...'; const index=Math.floor(Math.random()*options.length); const labelAngle = -67 + index * 45; const targetAngle = (270 - labelAngle + 360) % 360; wheelRotation += 1440 + ((targetAngle - wheelRotation) % 360 + 360) % 360; wheel.style.transform=`rotate(${wheelRotation}deg)`; setTimeout(()=>{ $('winner').textContent=`今天就吃：${options[index]}`; spin.disabled=false; },4300); });
     render();
   </script>
 </body>
