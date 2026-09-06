@@ -76,7 +76,7 @@
     <section class="workspace">
       <aside class="panel filters"><div class="panel-title"><h2>今天怎么吃？</h2><span>01 / 07</span></div>
         <div class="field"><label>口味偏好 <b>味型</b></label><select id="flavor"><option>酸辣开胃</option><option>清淡鲜香</option><option>家常咸香</option><option>酱香浓郁</option><option>清爽少负担</option><option>口味随心</option></select></div>
-        <div class="field"><label>喜欢品类 <b>想吃什么</b></label><select id="category"><option>米饭盖饭</option><option>汤面米线</option><option>粉面小吃</option><option>肉类主菜</option><option>健康轻食</option><option>汤粥简餐</option><option>汉堡炸鸡</option><option>日韩料理</option><option>想尝试不同品类</option></select></div>
+        <div class="field"><label>喜欢品类 <b>想吃什么</b></label><select id="category"><option>米饭盖饭</option><option>汤面米线</option><option>干拌面食</option><option>肉类主菜</option><option>健康轻食</option><option>汤粥简餐</option><option>汉堡炸鸡</option><option>日韩料理</option><option>想尝试不同品类</option></select></div>
         <div class="field"><label>忌口设置 <b>严格避开</b></label><select id="avoid"><option>无明确忌口</option><option>不吃香菜</option><option>不吃辣</option><option>不吃海鲜</option><option>不吃牛肉</option><option>不吃猪肉</option></select></div>
         <div class="field"><label>分量 <b>人数</b></label><select id="portion"><option>正常标准份</option><option>小份 / 一人食</option><option>大份 / 多人分享</option></select></div>
         <div class="field"><label>价格预算 <b>单人</b></label><select id="budget"><option>15元以内</option><option>15-25元</option><option>25-35元</option><option>35元以上</option></select></div>
@@ -277,7 +277,7 @@
     function render(){
       const health = $('health').value, portion = $('portion').value, budget = $('budget').value, balance = $('balance').value;
       const flavor = $('flavor').value, category = $('category').value, avoid = $('avoid').value;
-      const categoryKey = category === '健康轻食' ? '蔬菜豆腐' : category === '粉面小吃' ? '面食主食' : category === '肉类主菜' ? '肉类菜品' : category;
+      const categoryKey = category === '健康轻食' ? '蔬菜豆腐' : category === '干拌面食' ? '面食主食' : category === '肉类主菜' ? '肉类菜品' : category;
       const isEastAsianCuisine = dish => dishMeta[dish.name].categories.includes('韩式拌饭') || dishMeta[dish.name].categories.includes('寿司料理');
       const soupNames = ['菌菇鸡汤米线','三鲜汤面','番茄鸡蛋面','牛肉汤粉','清汤鸡丝面','鲜虾云吞面','南瓜小米粥套餐','海鲜粥','番茄牛肉汤','胡椒猪肚鸡','菌菇豆腐汤','紫菜蛋花汤套餐'];
       const forbidden = avoid === '不吃香菜' ? ['香菜'] : avoid === '不吃辣' ? ['酸辣','酸汤','青椒','黑椒'] : avoid === '不吃海鲜' ? ['虾','鱼','三鲜'] : avoid === '不吃牛肉' ? ['牛肉','肥牛'] : avoid === '不吃猪肉' ? ['猪肉','卤肉','肉饼'] : [];
