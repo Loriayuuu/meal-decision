@@ -72,23 +72,21 @@
 <body>
   <main class="shell">
     <header><div class="brand"><div class="brand-mark">食</div><div>饭点有答案<small>MEAL DECISION ENGINE</small></div></div><div class="status"><i class="dot"></i>本地推理引擎已就绪</div></header>
-    <section class="hero"><div><div class="eyebrow">today's food, decided</div><h1>别纠结了，<br><em>好好吃饭。</em></h1><p>告诉我今天的状态，剩下的交给算法。严格避开忌口、预算和时间雷区，再用转盘替你拍板。</p></div><div class="hero-note">把“想吃点什么”变成一个明确答案。<br><span style="color:var(--muted);font-weight:500">适合午休、放学，也适合下班后的最后一公里。</span></div></section>
+    <section class="hero"><div><div class="eyebrow">today's food, decided</div><h1>别纠结了，<br><em>好好吃饭。</em></h1><p>告诉我今天的状态，剩下的交给算法。严格避开忌口和预算雷区，再用转盘替你拍板。</p></div><div class="hero-note">把“想吃点什么”变成一个明确答案。<br><span style="color:var(--muted);font-weight:500">适合午休、放学，也适合下班后的最后一公里。</span></div></section>
     <section class="workspace">
-      <aside class="panel filters"><div class="panel-title"><h2>今天怎么吃？</h2><span>01 / 09</span></div>
+      <aside class="panel filters"><div class="panel-title"><h2>今天怎么吃？</h2><span>01 / 07</span></div>
         <div class="field"><label>口味偏好 <b>味型</b></label><select id="flavor"><option>酸辣开胃</option><option>清淡鲜香</option><option>家常咸香</option><option>酱香浓郁</option><option>清爽少负担</option><option>口味随心</option></select></div>
-        <div class="field"><label>喜欢品类 <b>想吃什么</b></label><select id="category"><option>米饭盖饭</option><option>汤面米线</option><option>面食主食</option><option>肉类菜品</option><option>蔬菜豆腐</option><option>想尝试不同品类</option></select></div>
+        <div class="field"><label>喜欢品类 <b>想吃什么</b></label><select id="category"><option>米饭盖饭</option><option>汤面米线</option><option>粉面小吃</option><option>肉类主菜</option><option>健康轻食</option><option>汤粥简餐</option><option>汉堡炸鸡</option><option>日韩料理</option><option>想尝试不同品类</option></select></div>
         <div class="field"><label>忌口设置 <b>严格避开</b></label><select id="avoid"><option>无明确忌口</option><option>不吃香菜</option><option>不吃辣</option><option>不吃海鲜</option><option>不吃牛肉</option><option>不吃猪肉</option></select></div>
-        <div class="field"><label>就餐地点 <b>配送方式</b></label><select id="place"><option>外卖配送（当前定位）</option><option>到店就餐（附近门店）</option></select></div>
         <div class="field"><label>分量 <b>人数</b></label><select id="portion"><option>正常标准份</option><option>小份 / 一人食</option><option>大份 / 多人分享</option></select></div>
-        <div class="field"><label>价格预算 <b>单人</b></label><select id="budget"><option>15-25元</option><option>15元以内</option><option>25-40元</option><option>40元以上</option></select></div>
+        <div class="field"><label>价格预算 <b>单人</b></label><select id="budget"><option>15元以内</option><option>15-25元</option><option>25-35元</option><option>35元以上</option></select></div>
         <div class="field"><label>饮食搭配 <b>结构</b></label><select id="balance"><option>荤素均衡</option><option>主食优先</option><option>多菜少饭</option><option>全素</option><option>重碳水</option></select></div>
         <div class="field"><label>健康管理 <b>身体状态</b></label><select id="health"><option>普通随便吃</option><option>减脂控卡</option><option>养胃清淡</option><option>高蛋白</option><option>少辣少油</option></select></div>
-        <div class="field"><label>时间预算 <b>耐心值</b></label><select id="time"><option>快速出餐（30分钟内送达）</option><option>不着急</option><option>可以久等</option></select></div>
         <button class="run" id="run">开始推理 →</button>
       </aside>
       <section class="panel results"><div class="results-head"><div><h2 id="summaryTitle">今天适合一顿酸辣均衡的快餐</h2><p id="summaryText">已根据 7 项条件，为你筛出不踩雷的选择。</p></div><div class="count">8 个转盘候选</div></div>
         <div class="content-grid"><div class="dish-list" id="dishList"></div><div class="wheel-wrap"><div class="pointer"></div><div class="wheel" id="wheel"></div><button class="spin" id="spin">转一下，今天就它</button><div class="winner" id="winner"></div></div></div>
-        <div class="merchants"><h3>适配商家参考</h3><div class="merchant-list" id="merchantList"></div></div>
+        <div class="merchants"><h3>适配店铺类型参考</h3><div class="merchant-list" id="merchantList"></div></div>
       </section>
     </section>
     <footer>FILTER FIRST · DECIDE FASTER · EAT BETTER</footer>
@@ -100,19 +98,19 @@
       {name:'照烧鸡腿饭',desc:'嫩鸡腿配西兰花，酱香下饭但不腻。',tags:['标准份','荤素均衡','外卖友好']},
       {name:'香菇青菜卤肉饭',desc:'卤肉软烂入味，搭配青菜，平价稳妥。',tags:['平价','外卖友好','出餐快']},
       {name:'虾仁滑蛋饭',desc:'嫩滑鸡蛋配虾仁，清爽又有满足感。',tags:['高蛋白','少油','一人食']},
-      {name:'小炒黄牛肉套餐',desc:'现炒香气足，配时蔬和米饭，饱腹不单调。',tags:['荤素均衡','到店合适','25-40元']},
+      {name:'小炒黄牛肉套餐',desc:'现炒香气足，配时蔬和米饭，饱腹不单调。',tags:['荤素均衡','到店合适','25-35元']},
       {name:'菌菇鸡汤米线',desc:'热乎清爽的一碗，菌菇和鸡肉都很鲜。',tags:['养胃','清淡','出餐快']},
       {name:'韩式拌饭',desc:'蔬菜、鸡蛋和牛肉拌匀，口味有层次。',tags:['多菜少饭','一人食','外卖友好']},
       {name:'蒸蛋肉饼套餐',desc:'软嫩蒸蛋搭配肉饼，温和又扎实。',tags:['养胃','标准份','平价']},
       {name:'时蔬鸡胸沙拉',desc:'鸡胸肉配多种蔬菜，轻负担也有蛋白质。',tags:['减脂控卡','高蛋白','少油']},
-      {name:'酸汤鱼片饭',desc:'酸爽汤汁配嫩鱼片，开胃又不容易腻。',tags:['酸辣','荤素均衡','25-40元']},
+      {name:'酸汤鱼片饭',desc:'酸爽汤汁配嫩鱼片，开胃又不容易腻。',tags:['酸辣','荤素均衡','25-35元']},
       {name:'黑椒牛肉意面',desc:'黑椒牛肉配弹牙意面，适合想换口味的一餐。',tags:['主食优先','标准份','外卖友好']},
       {name:'青椒肉丝盖饭',desc:'家常青椒肉丝配米饭，香而不复杂。',tags:['平价','出餐快','15元以内']},
       {name:'番茄豆腐煲',desc:'番茄和嫩豆腐热乎入味，清爽下饭。',tags:['全素可选','少油','养胃']},
       {name:'牛肉蔬菜卷',desc:'牛肉、生菜和全麦饼组合，轻便不漏汤。',tags:['高蛋白','一人食','外卖友好']},
       {name:'三鲜汤面',desc:'菌菇、青菜和鸡蛋煮成热汤面，温和顺口。',tags:['养胃','15元以内','快速出餐']},
       {name:'砂锅土豆粉',desc:'热乎弹滑的土豆粉，配肉片和蔬菜更有满足感。',tags:['重碳水','标准份','到店合适']},
-      {name:'铁板鸡排饭',desc:'现煎鸡排配玉米和蔬菜，香气足、分量足。',tags:['高蛋白','到店合适','25-40元']},
+      {name:'铁板鸡排饭',desc:'现煎鸡排配玉米和蔬菜，香气足、分量足。',tags:['高蛋白','到店合适','25-35元']},
         {name:'蔬菜豆腐便当',desc:'时蔬、豆腐和杂粮饭，清爽轻盈的一盒。',tags:['全素','减脂控卡','外卖友好']},
         {name:'酸菜肉丝面',desc:'酸菜和肉丝拌入热面，酸香开胃又顶饱。',tags:['酸辣','主食优先','出餐快']},
         {name:'番茄鸡蛋面',desc:'番茄汤底配嫩鸡蛋，简单热乎，适合一人食。',tags:['清淡','养胃','15元以内']},
@@ -126,13 +124,98 @@
         {name:'玉米蔬菜煲',desc:'玉米、胡萝卜和时蔬慢煨，鲜甜轻盈。',tags:['全素','清淡','养胃']},
         {name:'菌菇杂粮焖饭',desc:'多种菌菇配杂粮饭，香气足，适合一人食。',tags:['全素','清爽少负担','一人食']},
         {name:'清汤鸡丝面',desc:'清汤配鸡丝和青菜，热乎鲜香，适合快速吃饱。',tags:['清淡','高蛋白','快速出餐']},
-        {name:'凉拌豆腐蔬菜盒',desc:'嫩豆腐搭配玉米、生菜和胡萝卜，清爽方便。',tags:['全素','清爽少负担','外卖友好']}
+        {name:'凉拌豆腐蔬菜盒',desc:'嫩豆腐搭配玉米、生菜和胡萝卜，清爽方便。',tags:['全素','清爽少负担','外卖友好']},
+        {name:'咖喱鸡肉饭',desc:'温和咖喱裹住鸡肉和土豆，香浓下饭又有饱腹感。',tags:['酱香浓郁','标准份','外卖友好']},
+        {name:'鱼香茄子饭',desc:'软糯茄子配木耳青椒，酸甜咸香很下饭。',tags:['家常咸香','全素可选','15-25元']},
+        {name:'香煎鸡扒饭',desc:'香煎鸡扒搭配玉米和生菜，外卖也能保持满足感。',tags:['高蛋白','荤素均衡','25-35元']},
+        {name:'毛豆鸡丁盖饭',desc:'嫩鸡丁配清甜毛豆，口感丰富，分量扎实。',tags:['高蛋白','荤素均衡','出餐快']},
+        {name:'金汤酸菜鱼',desc:'酸鲜金汤配嫩鱼片，开胃爽口，适合多人分享。',tags:['酸辣','标准份','35元以上']},
+        {name:'日式牛肉饭',desc:'洋葱牛肉盖在热米饭上，甜咸平衡，快速解决一餐。',tags:['酱香浓郁','出餐快','15-25元']},
+        {name:'鸡蛋灌饼套餐',desc:'现烙饼皮夹鸡蛋和生菜，方便快捷又有满足感。',tags:['主食优先','一人食','15元以内']},
+        {name:'葱油拌面',desc:'葱香油润的面条简单耐吃，适合想快速吃饱的时候。',tags:['家常咸香','重碳水','15元以内']},
+        {name:'鲜虾云吞面',desc:'鲜虾云吞配清汤面，鲜香热乎，分量刚刚好。',tags:['清淡鲜香','一人食','快速出餐']},
+        {name:'麻辣拌',desc:'蔬菜、豆制品和肉类自由搭配，想吃丰富一点就选它。',tags:['酸辣','多菜少饭','外卖友好']},
+        {name:'南瓜小米粥套餐',desc:'南瓜小米粥配蒸蛋和时蔬，温和清爽，适合养胃。',tags:['养胃','清淡','15元以内']},
+        {name:'藜麦鸡胸便当',desc:'鸡胸、藜麦和西兰花组合，轻负担也有足够蛋白质。',tags:['减脂控卡','高蛋白','外卖友好']},
+        {name:'番茄牛腩饭',desc:'牛腩炖得软烂，番茄汤汁酸甜浓郁，米饭很搭。',tags:['酱香浓郁','标准份','35元以上']},
+        {name:'干炒牛河',desc:'河粉配牛肉和豆芽大火快炒，锅气十足，适合换换口味。',tags:['家常咸香','主食优先','到店合适']},
+        {name:'白菜豆腐粉丝煲',desc:'白菜、豆腐和粉丝炖得热乎鲜甜，清淡但不寡淡。',tags:['全素','养胃','清淡']},
+        {name:'梅菜扣肉饭',desc:'梅菜吸足肉汁，配热米饭香而不腻，适合想吃扎实一点。',tags:['家常咸香','标准份','25-35元']},
+        {name:'香辣鸡翅饭',desc:'香辣鸡翅配玉米和青菜，味道浓郁，饱腹感很足。',tags:['酸辣','高蛋白','25-35元']},
+        {name:'土豆牛肉盖饭',desc:'软糯土豆和牛肉一起炖煮，家常味道很下饭。',tags:['家常咸香','标准份','25-35元']},
+        {name:'宫保鸡丁饭',desc:'鸡丁、花生和蔬菜酸甜微辣，口感丰富不单调。',tags:['家常咸香','出餐快','15-25元']},
+        {name:'鱼香肉丝饭',desc:'木耳笋丝和肉丝搭配酸甜酱汁，经典又下饭。',tags:['家常咸香','出餐快','15-25元']},
+        {name:'农家小炒肉饭',desc:'青椒配嫩炒肉，锅气足，适合喜欢家常重口味的人。',tags:['家常咸香','主食优先','15-25元']},
+        {name:'香菇滑鸡饭',desc:'鸡肉和香菇蒸得鲜嫩，配米饭清香又满足。',tags:['清淡鲜香','高蛋白','15-25元']},
+        {name:'红烧排骨饭',desc:'排骨炖得软烂入味，配青菜和米饭很扎实。',tags:['酱香浓郁','标准份','35元以上']},
+        {name:'咖喱牛肉饭',desc:'浓郁咖喱配牛肉、胡萝卜和土豆，香气很足。',tags:['酱香浓郁','标准份','25-35元']},
+        {name:'双拼烧腊饭',desc:'烧鸭和叉烧双拼，一次满足两种肉香，适合大口吃饭。',tags:['酱香浓郁','标准份','35元以上']},
+        {name:'扬州炒饭',desc:'米饭、鸡蛋、火腿和玉米炒得粒粒分明，简单耐吃。',tags:['家常咸香','主食优先','15-25元']},
+        {name:'重庆小面',desc:'红油、花生和芽菜拌入劲道面条，麻辣鲜香很过瘾。',tags:['酸辣','重碳水','15元以内']},
+        {name:'担担面',desc:'芝麻酱和肉臊裹住细面，咸香微辣，适合一人食。',tags:['酸辣','一人食','15元以内']},
+        {name:'炸酱面',desc:'浓香炸酱配黄瓜和面条，家常味道，饱腹又方便。',tags:['家常咸香','主食优先','15元以内']},
+        {name:'热干面',desc:'芝麻酱裹住热面，香浓顺滑，适合快速吃饱。',tags:['家常咸香','重碳水','15元以内']},
+        {name:'牛肉拉面',desc:'清汤牛肉配手工面，汤鲜面劲道，热乎又满足。',tags:['清淡鲜香','高蛋白','15-25元']},
+        {name:'兰州炒面片',desc:'面片配牛肉和蔬菜一起翻炒，口感厚实有锅气。',tags:['家常咸香','主食优先','25-35元']},
+        {name:'虾籽面',desc:'清鲜汤底配细面和虾籽，鲜香轻盈不油腻。',tags:['清淡鲜香','一人食','15-25元']},
+        {name:'酸汤面',desc:'酸爽汤底配面条和青菜，开胃又适合快速用餐。',tags:['酸辣','清淡','15元以内']},
+        {name:'螺蛳粉',desc:'酸笋、木耳和米粉组合，风味独特，适合想吃重口味。',tags:['酸辣','重碳水','15-25元']},
+        {name:'过桥米线',desc:'鲜汤配肉片、蔬菜和米线，口感丰富，热乎鲜美。',tags:['清淡鲜香','标准份','25-35元']},
+        {name:'番茄米线',desc:'番茄汤底酸甜开胃，配青菜和豆皮清爽顺口。',tags:['清淡鲜香','一人食','15-25元']},
+        {name:'肥牛乌冬面',desc:'肥牛、洋葱和乌冬面浸在甜咸汤汁里，满足感很强。',tags:['酱香浓郁','高蛋白','25-35元']},
+        {name:'海鲜粥',desc:'虾仁、鱿鱼和贝类煮成鲜粥，温和鲜美，适合清淡口味。',tags:['清淡鲜香','养胃','25-35元']},
+        {name:'番茄牛肉汤',desc:'番茄和牛肉煮成酸鲜汤，搭配主食很舒服。',tags:['清淡鲜香','高蛋白','25-35元']},
+        {name:'胡椒猪肚鸡',desc:'胡椒汤底温润鲜香，鸡肉和猪肚都很有满足感。',tags:['清淡鲜香','标准份','35元以上']},
+        {name:'水煮肉片',desc:'嫩肉片配豆芽和青菜，麻辣鲜香，适合多人分享。',tags:['酸辣','标准份','35元以上']},
+        {name:'香酥鸡排',desc:'外酥里嫩的鸡排配沙拉或薯角，简单直接又满足。',tags:['高蛋白','一人食','25-35元']},
+        {name:'烤鱼套餐',desc:'烤鱼配豆皮、菌菇和蔬菜，适合想吃丰富一点的一餐。',tags:['酸辣','标准份','35元以上']},
+        {name:'蒜香排骨',desc:'蒜香裹住酥嫩排骨，配时蔬和米饭很有满足感。',tags:['家常咸香','标准份','35元以上']},
+        {name:'香煎鳕鱼',desc:'煎鳕鱼配烤蔬菜和杂粮，清爽又有优质蛋白。',tags:['清爽少负担','高蛋白','35元以上']},
+        {name:'麻婆豆腐饭',desc:'嫩豆腐配麻辣肉酱，麻香下饭，也可以选择少油做法。',tags:['酸辣','高蛋白','15-25元']},
+        {name:'木须肉饭',desc:'鸡蛋、木耳、黄瓜和肉片搭配，清爽下饭又有层次。',tags:['家常咸香','荤素均衡','15-25元']},
+        {name:'干煸四季豆',desc:'四季豆配少量肉末干煸，香气足，适合配米饭。',tags:['家常咸香','多菜少饭','15-25元']},
+        {name:'地三鲜',desc:'茄子、土豆和青椒烧得入味，经典家常素菜。',tags:['家常咸香','全素','15元以内']},
+        {name:'上汤娃娃菜',desc:'娃娃菜配菌菇和高汤，鲜甜清爽，适合少油饮食。',tags:['清淡鲜香','全素','15-25元']},
+        {name:'西红柿炒蛋饭',desc:'酸甜番茄配嫩鸡蛋，家常热乎，拌饭特别合适。',tags:['家常咸香','荤素均衡','15元以内']},
+        {name:'香煎豆腐饭',desc:'外焦里嫩的豆腐配时蔬和杂粮饭，简单但很满足。',tags:['清爽少负担','全素','15-25元']},
+        {name:'素三鲜水饺',desc:'韭菜、鸡蛋和菌菇包成水饺，清爽鲜香，适合一人食。',tags:['清淡鲜香','全素','15-25元']},
+        {name:'菌菇豆腐汤',desc:'多种菌菇和嫩豆腐煮成鲜汤，轻盈温和，适合养胃。',tags:['清淡鲜香','全素','15元以内']},
+        {name:'紫菜蛋花汤套餐',desc:'紫菜蛋花汤搭配小菜和杂粮饭，轻松解决一餐。',tags:['清淡鲜香','养胃','15元以内']},
+        {name:'牛油果鸡肉沙拉',desc:'鸡肉、牛油果和生菜组合，清爽有饱腹感。',tags:['减脂控卡','高蛋白','25-35元']},
+        {name:'金枪鱼玉米沙拉',desc:'金枪鱼、玉米和生菜搭配，鲜甜清爽，适合控卡。',tags:['减脂控卡','高蛋白','25-35元']},
+        {name:'全麦鸡肉三明治',desc:'全麦面包夹鸡肉、生菜和鸡蛋，方便轻盈又顶饱。',tags:['减脂控卡','一人食','15-25元']},
+        {name:'鸡蛋蔬菜卷',desc:'鸡蛋、生菜和玉米卷入全麦饼，清爽方便不腻。',tags:['清爽少负担','一人食','15-25元']},
+        {name:'杂粮饭配时蔬',desc:'杂粮饭搭配西兰花、玉米和菌菇，清爽饱腹。',tags:['减脂控卡','全素','15-25元']},
+        {name:'经典牛肉汉堡',desc:'煎牛肉饼配生菜、芝士和面包，满足感直接又方便。',tags:['高蛋白','一人食','25-35元']},
+        {name:'香辣鸡腿堡',desc:'酥脆鸡腿排配生菜和酱汁，适合想吃点香的。',tags:['酸辣','一人食','15-25元']},
+        {name:'原味炸鸡拼盘',desc:'外酥里嫩的炸鸡搭配薯条，适合分享或放松一下。',tags:['高蛋白','标准份','25-35元']},
+        {name:'鸡翅薯条套餐',desc:'鸡翅、薯条和饮品组合，简单快捷，适合一人用餐。',tags:['一人食','出餐快','15-25元']},
+        {name:'韩式石锅拌饭',desc:'米饭、蔬菜、鸡蛋和牛肉在石锅里拌匀，香气十足。',tags:['荤素均衡','标准份','25-35元']},
+        {name:'泡菜五花肉拌饭',desc:'泡菜配五花肉和热米饭，酸辣开胃，层次丰富。',tags:['酸辣','荤素均衡','25-35元']},
+        {name:'三文鱼牛油果卷',desc:'三文鱼、牛油果和醋饭组合，清爽细腻，适合轻食。',tags:['清爽少负担','高蛋白','35元以上']},
+        {name:'鳗鱼寿司饭',desc:'照烧鳗鱼配醋饭和海苔，甜咸鲜香，满足感很足。',tags:['酱香浓郁','标准份','35元以上']},
+        {name:'什锦寿司拼盘',desc:'多种寿司一次搭配，口味丰富，适合想尝试不同组合。',tags:['清淡鲜香','标准份','35元以上']},
+        {name:'培根芝士汉堡',desc:'培根、芝士和牛肉饼组合，咸香浓郁，适合主食需求。',tags:['高蛋白','标准份','25-35元']},
+        {name:'鱼排汉堡',desc:'酥脆鱼排配生菜和塔塔酱，口感清爽又有满足感。',tags:['清淡鲜香','一人食','15-25元']},
+        {name:'劲脆鸡米花',desc:'小块鸡肉炸得酥脆，适合搭配主食或作为分享小食。',tags:['高蛋白','一人食','15-25元']},
+        {name:'鸡肉卷套餐',desc:'鸡肉、生菜和酱汁卷入薄饼，方便快速，饱腹不腻。',tags:['清爽少负担','一人食','15-25元']},
+        {name:'牛肉芝士拌饭',desc:'牛肉、芝士和韩式酱汁拌入热米饭，香浓有层次。',tags:['酱香浓郁','荤素均衡','25-35元']},
+        {name:'韩式炸鸡饭',desc:'甜辣炸鸡配米饭和腌萝卜，酸甜开胃，满足感很强。',tags:['酸辣','标准份','25-35元']},
+        {name:'海苔鸡肉拌饭',desc:'鸡肉、海苔和蔬菜搭配芝麻酱，清香爽口，适合一人食。',tags:['清爽少负担','一人食','15-25元']},
+        {name:'韩式冷面套餐',desc:'冰凉酸甜的冷面配牛肉和鸡蛋，适合想吃清爽主食。',tags:['酸辣','标准份','25-35元']},
+        {name:'芝士年糕拌饭',desc:'软糯年糕、蔬菜和芝士酱组合，适合喜欢浓郁口味。',tags:['酱香浓郁','主食优先','25-35元']},
+        {name:'金枪鱼寿司卷',desc:'金枪鱼、黄瓜和醋饭卷在海苔里，清爽方便，适合单人。',tags:['清淡鲜香','一人食','25-35元']},
+        {name:'加州卷',desc:'蟹柳、牛油果和黄瓜搭配醋饭，口感清新，层次丰富。',tags:['清爽少负担','一人食','25-35元']},
+        {name:'鳗鱼手卷',desc:'照烧鳗鱼和醋饭卷入海苔，甜咸鲜香，拿取方便。',tags:['酱香浓郁','一人食','25-35元']},
+        {name:'玉子寿司',desc:'嫩滑玉子配醋饭，味道温和，适合清淡口味。',tags:['清淡鲜香','一人食','15-25元']},
+        {name:'虾仁寿司',desc:'鲜虾配醋饭和海苔，口感清爽，适合喜欢鲜味的人。',tags:['清淡鲜香','一人食','25-35元']},
+        {name:'日式咖喱猪排饭',desc:'酥脆猪排配日式咖喱和米饭，香浓扎实，适合大口吃饭。',tags:['酱香浓郁','标准份','35元以上']}
     ];
     const dishMeta = {
       '番茄肥牛盖饭': {categories:['米饭盖饭','肉类菜品'], flavors:['清淡鲜香','家常咸香']}, '酸辣鸡丝拌面': {categories:['面食主食'], flavors:['酸辣开胃']},
       '照烧鸡腿饭': {categories:['米饭盖饭','肉类菜品'], flavors:['酱香浓郁','家常咸香']}, '香菇青菜卤肉饭': {categories:['米饭盖饭','肉类菜品'], flavors:['家常咸香','酱香浓郁']},
       '虾仁滑蛋饭': {categories:['米饭盖饭'], flavors:['清淡鲜香','清爽少负担']}, '小炒黄牛肉套餐': {categories:['肉类菜品','米饭盖饭'], flavors:['家常咸香']},
-      '菌菇鸡汤米线': {categories:['汤面米线'], flavors:['清淡鲜香','清爽少负担']}, '韩式拌饭': {categories:['米饭盖饭'], flavors:['酱香浓郁']},
+      '菌菇鸡汤米线': {categories:['汤面米线'], flavors:['清淡鲜香','清爽少负担']}, '韩式拌饭': {categories:['韩式拌饭'], flavors:['酱香浓郁']},
       '蒸蛋肉饼套餐': {categories:['肉类菜品','米饭盖饭'], flavors:['清淡鲜香','家常咸香']}, '时蔬鸡胸沙拉': {categories:['蔬菜豆腐','肉类菜品'], flavors:['清爽少负担','清淡鲜香']},
       '酸汤鱼片饭': {categories:['米饭盖饭','肉类菜品'], flavors:['酸辣开胃']}, '黑椒牛肉意面': {categories:['面食主食','肉类菜品'], flavors:['酱香浓郁']},
       '青椒肉丝盖饭': {categories:['米饭盖饭','肉类菜品'], flavors:['家常咸香']}, '番茄豆腐煲': {categories:['蔬菜豆腐'], flavors:['清淡鲜香','清爽少负担']},
@@ -144,13 +227,59 @@
       '麻酱拌面': {categories:['面食主食'], flavors:['家常咸香']}, '酸辣粉': {categories:['汤面米线'], flavors:['酸辣开胃']},
       '西兰花菌菇饭': {categories:['蔬菜豆腐'], flavors:['清淡鲜香','清爽少负担']}, '家常豆腐饭': {categories:['蔬菜豆腐'], flavors:['家常咸香']},
       '玉米蔬菜煲': {categories:['蔬菜豆腐'], flavors:['清淡鲜香','清爽少负担']}, '菌菇杂粮焖饭': {categories:['蔬菜豆腐'], flavors:['清爽少负担','家常咸香']},
-      '清汤鸡丝面': {categories:['汤面米线'], flavors:['清淡鲜香']}, '凉拌豆腐蔬菜盒': {categories:['蔬菜豆腐'], flavors:['清爽少负担','清淡鲜香']}
+      '清汤鸡丝面': {categories:['汤面米线'], flavors:['清淡鲜香']}, '凉拌豆腐蔬菜盒': {categories:['蔬菜豆腐'], flavors:['清爽少负担','清淡鲜香']},
+      '咖喱鸡肉饭': {categories:['米饭盖饭','肉类菜品'], flavors:['酱香浓郁']}, '鱼香茄子饭': {categories:['米饭盖饭','蔬菜豆腐'], flavors:['家常咸香']},
+      '香煎鸡扒饭': {categories:['米饭盖饭','肉类菜品'], flavors:['家常咸香']}, '毛豆鸡丁盖饭': {categories:['米饭盖饭','肉类菜品'], flavors:['清淡鲜香','家常咸香']},
+      '金汤酸菜鱼': {categories:['肉类菜品','米饭盖饭'], flavors:['酸辣开胃']}, '日式牛肉饭': {categories:['米饭盖饭','肉类菜品'], flavors:['酱香浓郁']},
+      '鸡蛋灌饼套餐': {categories:['面食主食'], flavors:['家常咸香']}, '葱油拌面': {categories:['面食主食'], flavors:['家常咸香']},
+      '鲜虾云吞面': {categories:['汤面米线'], flavors:['清淡鲜香']}, '麻辣拌': {categories:['蔬菜豆腐','肉类菜品'], flavors:['酸辣开胃']},
+      '南瓜小米粥套餐': {categories:['蔬菜豆腐'], flavors:['清淡鲜香']}, '藜麦鸡胸便当': {categories:['蔬菜豆腐','肉类菜品'], flavors:['清爽少负担','清淡鲜香']},
+      '番茄牛腩饭': {categories:['米饭盖饭','肉类菜品'], flavors:['酱香浓郁','家常咸香']}, '干炒牛河': {categories:['面食主食','肉类菜品'], flavors:['家常咸香']},
+      '白菜豆腐粉丝煲': {categories:['蔬菜豆腐','汤面米线'], flavors:['清淡鲜香','清爽少负担']},
+      '梅菜扣肉饭': {categories:['米饭盖饭','肉类菜品'], flavors:['家常咸香']}, '香辣鸡翅饭': {categories:['米饭盖饭','肉类菜品'], flavors:['酸辣开胃']},
+      '土豆牛肉盖饭': {categories:['米饭盖饭','肉类菜品'], flavors:['家常咸香']}, '宫保鸡丁饭': {categories:['米饭盖饭','肉类菜品'], flavors:['家常咸香']},
+      '鱼香肉丝饭': {categories:['米饭盖饭','肉类菜品'], flavors:['家常咸香']}, '农家小炒肉饭': {categories:['米饭盖饭','肉类菜品'], flavors:['家常咸香']},
+      '香菇滑鸡饭': {categories:['米饭盖饭','肉类菜品'], flavors:['清淡鲜香']}, '红烧排骨饭': {categories:['米饭盖饭','肉类菜品'], flavors:['酱香浓郁']},
+      '咖喱牛肉饭': {categories:['米饭盖饭','肉类菜品'], flavors:['酱香浓郁']}, '双拼烧腊饭': {categories:['米饭盖饭','肉类菜品'], flavors:['酱香浓郁']},
+      '扬州炒饭': {categories:['米饭盖饭'], flavors:['家常咸香']}, '重庆小面': {categories:['面食主食'], flavors:['酸辣开胃']},
+      '担担面': {categories:['面食主食'], flavors:['酸辣开胃']}, '炸酱面': {categories:['面食主食'], flavors:['家常咸香']},
+      '热干面': {categories:['面食主食'], flavors:['家常咸香']}, '牛肉拉面': {categories:['汤面米线'], flavors:['清淡鲜香']},
+      '兰州炒面片': {categories:['汤面米线','面食主食'], flavors:['家常咸香']}, '虾籽面': {categories:['汤面米线'], flavors:['清淡鲜香']},
+      '酸汤面': {categories:['汤面米线'], flavors:['酸辣开胃']}, '螺蛳粉': {categories:['汤面米线'], flavors:['酸辣开胃']},
+      '过桥米线': {categories:['汤面米线'], flavors:['清淡鲜香']}, '番茄米线': {categories:['汤面米线'], flavors:['清淡鲜香']},
+      '肥牛乌冬面': {categories:['汤面米线','面食主食','肉类菜品'], flavors:['酱香浓郁']}, '海鲜粥': {categories:['汤面米线'], flavors:['清淡鲜香']},
+      '番茄牛肉汤': {categories:['汤面米线','肉类菜品'], flavors:['清淡鲜香']}, '胡椒猪肚鸡': {categories:['肉类菜品'], flavors:['清淡鲜香']},
+      '水煮肉片': {categories:['肉类菜品'], flavors:['酸辣开胃']}, '香酥鸡排': {categories:['肉类菜品'], flavors:['家常咸香']},
+      '烤鱼套餐': {categories:['肉类菜品'], flavors:['酸辣开胃']}, '蒜香排骨': {categories:['肉类菜品'], flavors:['家常咸香']},
+      '香煎鳕鱼': {categories:['肉类菜品'], flavors:['清爽少负担','清淡鲜香']}, '麻婆豆腐饭': {categories:['蔬菜豆腐','米饭盖饭'], flavors:['酸辣开胃']},
+      '木须肉饭': {categories:['米饭盖饭','肉类菜品'], flavors:['家常咸香']}, '干煸四季豆': {categories:['蔬菜豆腐'], flavors:['家常咸香']},
+      '地三鲜': {categories:['蔬菜豆腐'], flavors:['家常咸香']}, '上汤娃娃菜': {categories:['蔬菜豆腐'], flavors:['清淡鲜香']},
+      '西红柿炒蛋饭': {categories:['米饭盖饭','蔬菜豆腐'], flavors:['家常咸香']}, '香煎豆腐饭': {categories:['蔬菜豆腐','米饭盖饭'], flavors:['清爽少负担']},
+      '素三鲜水饺': {categories:['蔬菜豆腐','面食主食'], flavors:['清淡鲜香']}, '菌菇豆腐汤': {categories:['蔬菜豆腐','汤面米线'], flavors:['清淡鲜香','清爽少负担']},
+      '紫菜蛋花汤套餐': {categories:['蔬菜豆腐','汤面米线'], flavors:['清淡鲜香']}, '牛油果鸡肉沙拉': {categories:['蔬菜豆腐','肉类菜品'], flavors:['清爽少负担']},
+      '金枪鱼玉米沙拉': {categories:['蔬菜豆腐','肉类菜品'], flavors:['清爽少负担']}, '全麦鸡肉三明治': {categories:['面食主食','肉类菜品'], flavors:['清爽少负担']},
+      '鸡蛋蔬菜卷': {categories:['面食主食','蔬菜豆腐'], flavors:['清爽少负担']}, '杂粮饭配时蔬': {categories:['蔬菜豆腐'], flavors:['清爽少负担','清淡鲜香']},
+      '经典牛肉汉堡': {categories:['汉堡炸鸡','肉类菜品'], flavors:['家常咸香']}, '香辣鸡腿堡': {categories:['汉堡炸鸡','肉类菜品'], flavors:['酸辣开胃']},
+      '原味炸鸡拼盘': {categories:['汉堡炸鸡','肉类菜品'], flavors:['家常咸香']}, '鸡翅薯条套餐': {categories:['汉堡炸鸡','肉类菜品'], flavors:['家常咸香']},
+      '韩式石锅拌饭': {categories:['韩式拌饭'], flavors:['酱香浓郁']}, '泡菜五花肉拌饭': {categories:['韩式拌饭','肉类菜品'], flavors:['酸辣开胃']},
+      '三文鱼牛油果卷': {categories:['寿司料理','健康轻食'], flavors:['清爽少负担','清淡鲜香']}, '鳗鱼寿司饭': {categories:['寿司料理'], flavors:['酱香浓郁']},
+      '什锦寿司拼盘': {categories:['寿司料理'], flavors:['清淡鲜香']}, '培根芝士汉堡': {categories:['汉堡炸鸡','肉类菜品'], flavors:['家常咸香']},
+      '鱼排汉堡': {categories:['汉堡炸鸡','肉类菜品'], flavors:['清淡鲜香']}, '劲脆鸡米花': {categories:['汉堡炸鸡','肉类菜品'], flavors:['家常咸香']},
+      '鸡肉卷套餐': {categories:['汉堡炸鸡','肉类菜品'], flavors:['清爽少负担']}, '牛肉芝士拌饭': {categories:['韩式拌饭','肉类菜品'], flavors:['酱香浓郁']},
+      '韩式炸鸡饭': {categories:['韩式拌饭','肉类菜品'], flavors:['酸辣开胃']}, '海苔鸡肉拌饭': {categories:['韩式拌饭','健康轻食'], flavors:['清爽少负担']},
+      '韩式冷面套餐': {categories:['韩式拌饭','汤面米线'], flavors:['酸辣开胃']}, '芝士年糕拌饭': {categories:['韩式拌饭'], flavors:['酱香浓郁']},
+      '金枪鱼寿司卷': {categories:['寿司料理'], flavors:['清淡鲜香']}, '加州卷': {categories:['寿司料理'], flavors:['清爽少负担']},
+      '鳗鱼手卷': {categories:['寿司料理'], flavors:['酱香浓郁']}, '玉子寿司': {categories:['寿司料理'], flavors:['清淡鲜香']}, '虾仁寿司': {categories:['寿司料理'], flavors:['清淡鲜香']},
+      '日式咖喱猪排饭': {categories:['米饭盖饭','肉类菜品'], flavors:['酱香浓郁']}
     };
     const $ = id => document.getElementById(id);
     let options = baseDishes.slice(0,8).map(d => d.name);
     function render(){
-      const health = $('health').value, place = $('place').value, portion = $('portion').value, time = $('time').value, budget = $('budget').value, balance = $('balance').value;
+      const health = $('health').value, portion = $('portion').value, budget = $('budget').value, balance = $('balance').value;
       const flavor = $('flavor').value, category = $('category').value, avoid = $('avoid').value;
+      const categoryKey = category === '健康轻食' ? '蔬菜豆腐' : category === '粉面小吃' ? '面食主食' : category === '肉类主菜' ? '肉类菜品' : category;
+      const isEastAsianCuisine = dish => dishMeta[dish.name].categories.includes('韩式拌饭') || dishMeta[dish.name].categories.includes('寿司料理');
+      const soupNames = ['菌菇鸡汤米线','三鲜汤面','番茄鸡蛋面','牛肉汤粉','清汤鸡丝面','鲜虾云吞面','南瓜小米粥套餐','海鲜粥','番茄牛肉汤','胡椒猪肚鸡','菌菇豆腐汤','紫菜蛋花汤套餐'];
       const forbidden = avoid === '不吃香菜' ? ['香菜'] : avoid === '不吃辣' ? ['酸辣','酸汤','青椒','黑椒'] : avoid === '不吃海鲜' ? ['虾','鱼','三鲜'] : avoid === '不吃牛肉' ? ['牛肉','肥牛'] : avoid === '不吃猪肉' ? ['猪肉','卤肉','肉饼'] : [];
       const wanted = [];
       if(flavor === '酸辣开胃') wanted.push('酸辣','酸汤');
@@ -158,10 +287,11 @@
       if(flavor === '家常咸香') wanted.push('家常','平价');
       if(flavor === '酱香浓郁') wanted.push('酱香','照烧','卤肉');
       if(flavor === '清爽少负担') wanted.push('清淡','少油','减脂控卡');
-      if(category === '汤面米线' || category === '面食主食') wanted.push('面','意面','米线','粉');
-      if(category === '米饭盖饭') wanted.push('盖饭','饭');
-      if(category === '蔬菜豆腐') wanted.push('全素','豆腐','蔬菜');
-      if(category === '肉类菜品') wanted.push('高蛋白','肉','鸡','牛');
+      if(categoryKey === '汤面米线' || categoryKey === '面食主食') wanted.push('面','意面','米线','粉');
+      if(categoryKey === '米饭盖饭') wanted.push('盖饭','饭');
+      if(categoryKey === '蔬菜豆腐') wanted.push('全素','豆腐','蔬菜');
+      if(categoryKey === '肉类菜品') wanted.push('高蛋白','肉','鸡','牛');
+      if(category === '汤粥简餐') wanted.push('汤','粥','清淡','养胃');
       if(health.includes('减脂')) wanted.push('减脂控卡','少油','高蛋白');
       if(health.includes('养胃')) wanted.push('养胃','清淡');
       if(health.includes('高蛋白')) wanted.push('高蛋白');
@@ -173,31 +303,28 @@
       if(portion.includes('大份')) wanted.push('标准份','分量足');
       if(budget.includes('15元以内')) wanted.push('15元以内','平价');
       if(budget.includes('15-25')) wanted.push('15-25元','平价');
-      if(budget.includes('25-40')) wanted.push('25-40元');
-      if(place.includes('外卖')) wanted.push('外卖友好');
-      if(place.includes('到店')) wanted.push('到店合适');
-      if(time.includes('快速')) wanted.push('出餐快','快速出餐');
+      if(budget.includes('25-35')) wanted.push('25-35元');
+      if(budget.includes('35元以上')) wanted.push('35元以上');
       let dishes = baseDishes.filter(d => !forbidden.some(word => d.name.includes(word) || d.desc.includes(word)));
         if(category !== '想尝试不同品类') {
-          dishes = dishes.filter(d => dishMeta[d.name].categories.includes(category));
+          dishes = dishes.filter(d => category === '汤粥简餐' ? soupNames.includes(d.name) : category === '日韩料理' ? isEastAsianCuisine(d) : dishMeta[d.name].categories.includes(categoryKey));
         }
       if(balance === '全素') dishes = dishes.filter(d => d.tags.includes('全素') || d.name.includes('豆腐') || d.name.includes('蔬菜'));
       dishes = dishes.map((dish, index) => {
         const meta = dishMeta[dish.name];
-        const categoryScore = category === '想尝试不同品类' ? 0 : meta.categories.includes(category) ? 24 : 0;
+        const categoryScore = category === '想尝试不同品类' ? 0 : category === '汤粥简餐' ? (soupNames.includes(dish.name) ? 24 : 0) : category === '日韩料理' ? (isEastAsianCuisine(dish) ? 24 : 0) : meta.categories.includes(categoryKey) ? 24 : 0;
         const flavorScore = flavor === '口味随心' ? 0 : meta.flavors.includes(flavor) ? 18 : 0;
         const keywordScore = wanted.reduce((score, word) => score + (dish.name.includes(word) || dish.desc.includes(word) || dish.tags.some(tag => tag.includes(word)) ? 2 : 0), 0);
         return {dish, score: categoryScore + flavorScore + keywordScore - index * 0.01};
       }).sort((a,b) => b.score - a.score).map(item => item.dish);
-      if(dishes.length < 8 && category === '想尝试不同品类') dishes = [...dishes, ...baseDishes.filter(d => !dishes.includes(d) && !forbidden.some(word => d.name.includes(word)))];
+      if(dishes.length < 8 && (category === '想尝试不同品类' || category === '汤粥简餐')) dishes = [...dishes, ...baseDishes.filter(d => !dishes.includes(d) && !forbidden.some(word => d.name.includes(word)))];
       dishes = dishes.slice(0,8);
       options = dishes.map(d => d.name);
       $('dishList').innerHTML = dishes.slice(0,8).map(d => `<article class="dish"><h3>${d.name}</h3><p>${d.desc}</p><div class="tags">${d.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div></article>`).join('');
       $('wheel').innerHTML = options.map((o,i) => `<span class="wheel-label">${o}</span>`).join('');
-      const pace = time.includes('快速') ? '快手' : '不赶时间';
-      $('summaryTitle').textContent = `${pace}模式 · ${health.includes('普通') ? '今天吃点满足的' : health.replace('管理','')} `;
-      $('summaryText').textContent = `${place.includes('外卖') ? '外卖配送' : '附近到店'}，${portion.split(' / ')[0]}，${budget}，${balance}，已筛掉不适配选项。`;
-      const merchantTypes = place.includes('外卖') ? [['连锁盖饭店','真功夫·同类店','15-25元｜打包稳，约30分钟内'],['轻食便当店','轻食研究所·同类店','25-40元｜可选低脂，高蛋白'],['地方小炒店','家常小炒·同类店','15-25元｜标准份，配送友好']] : [['社区快餐店','附近家常菜·同类店','15-25元｜现做现吃，一人食'],['商场简餐店','商场简餐·同类店','25-40元｜座位舒适，适合午休'],['面饭小馆','街坊面饭馆·同类店','15元以内｜出餐快，分量足']];
+      $('summaryTitle').textContent = `${health.includes('普通') ? '今天吃点满足的' : health.replace('管理','')} · 已为你筛选`;
+      $('summaryText').textContent = `${portion.split(' / ')[0]}，${budget}，${balance}，已筛掉不适配选项。`;
+      const merchantTypes = [['连锁盖饭店','家常主食选择','15-25元｜盖饭丰富，搭配稳定'],['轻食便当店','轻负担选择','25-35元｜可选低脂，高蛋白'],['地方小炒店','丰富菜品选择','15-25元｜口味灵活，适合换换口味']];
       $('merchantList').innerHTML = merchantTypes.map(m => `<div class="merchant"><strong>${m[0]} · ${m[1]}</strong><span>${m[2]}</span></div>`).join('');
       $('winner').textContent = '';
     }
