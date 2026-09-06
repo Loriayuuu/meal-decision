@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>饭点有答案 | 吃饭决策助手</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap');
+    :root { --ink:#17231f; --muted:#718078; --paper:#f6f7f1; --white:#fff; --lime:#d8f06a; --coral:#ff785e; --teal:#1f8274; --line:#dfe5dc; --shadow:0 18px 45px rgba(30,54,43,.08); }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font-family:'Noto Sans SC','Manrope',sans-serif; }
+    button, select { font:inherit; }
+    .shell { max-width:1240px; margin:auto; padding:28px 28px 54px; }
+    header { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:34px; }
+    .brand { display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:-.04em; }
+    .brand-mark { width:38px; height:38px; display:grid; place-items:center; background:var(--ink); color:var(--lime); border-radius:12px; font-size:21px; }
+    .brand small { display:block; color:var(--muted); font-size:10px; letter-spacing:.08em; font-family:'DM Mono',monospace; font-weight:500; }
+    .status { display:flex; align-items:center; gap:8px; color:var(--muted); font-size:13px; }
+    .dot { width:8px; height:8px; border-radius:50%; background:#66bb6a; box-shadow:0 0 0 4px #e3f3df; }
+    .hero { display:grid; grid-template-columns:1.1fr .9fr; gap:52px; align-items:end; margin-bottom:34px; }
+    .eyebrow { color:var(--coral); font:500 12px 'DM Mono',monospace; letter-spacing:.12em; text-transform:uppercase; }
+    h1 { margin:12px 0 15px; max-width:670px; font-size:clamp(42px,6vw,78px); line-height:.99; letter-spacing:-.08em; }
+    h1 em { color:var(--teal); font-style:normal; }
+    .hero p { max-width:570px; color:var(--muted); line-height:1.8; margin:0; font-size:15px; }
+    .hero-note { border-left:2px solid var(--coral); padding-left:18px; color:var(--ink); font-weight:700; line-height:1.7; }
+    .workspace { display:grid; grid-template-columns:400px 1fr; gap:22px; align-items:start; }
+    .panel { background:var(--white); border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow); }
+    .filters { padding:24px; }
+    .panel-title { display:flex; justify-content:space-between; align-items:center; margin-bottom:21px; }
+    .panel-title h2 { font-size:18px; margin:0; letter-spacing:-.04em; }
+    .panel-title span { color:var(--muted); font:11px 'DM Mono',monospace; }
+    .field { margin:0 0 16px; }
+    label { display:flex; justify-content:space-between; color:var(--muted); font-size:12px; font-weight:700; margin-bottom:8px; }
+    label b { color:var(--coral); font:500 10px 'DM Mono',monospace; }
+    select { width:100%; appearance:none; border:1px solid var(--line); border-radius:10px; padding:12px 14px; color:var(--ink); background:#fbfcf8 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23718078' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 13px center; outline:none; cursor:pointer; }
+    select:focus { border-color:var(--teal); box-shadow:0 0 0 3px #dff1ec; }
+    .run { width:100%; margin-top:6px; border:0; border-radius:11px; padding:14px; background:var(--ink); color:var(--lime); font-weight:900; cursor:pointer; transition:transform .2s, background .2s; }
+    .run:hover { transform:translateY(-2px); background:#28443a; }
+    .results { padding:25px; min-height:600px; }
+    .results-head { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:20px; }
+    .results-head h2 { margin:0 0 7px; font-size:24px; letter-spacing:-.06em; }
+    .results-head p { margin:0; color:var(--muted); font-size:13px; }
+    .count { background:#eef5c8; color:#536312; border-radius:99px; padding:7px 11px; font:500 11px 'DM Mono',monospace; white-space:nowrap; }
+    .content-grid { display:grid; grid-template-columns:1fr 275px; gap:24px; }
+    .dish-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:11px; }
+    .dish { border:1px solid var(--line); border-radius:12px; padding:15px; background:#fcfdf9; min-height:145px; transition:border .2s, transform .2s; }
+    .dish:hover { border-color:#9ecfc3; transform:translateY(-2px); }
+    .dish h3 { font-size:15px; margin:0 0 8px; letter-spacing:-.03em; }
+    .dish p { color:var(--muted); font-size:12px; line-height:1.65; margin:0 0 12px; }
+    .tags { display:flex; flex-wrap:wrap; gap:5px; }
+    .tag { font-size:10px; color:var(--teal); background:#e7f4ef; border-radius:5px; padding:4px 6px; }
+    .wheel-wrap { display:flex; flex-direction:column; align-items:center; padding:3px 0; }
+    .wheel { width:250px; aspect-ratio:1; border-radius:50%; position:relative; border:10px solid var(--ink); box-shadow:0 7px 0 #c4cec7, 0 14px 27px rgba(23,35,31,.14); overflow:hidden; transition:transform 4.2s cubic-bezier(.12,.65,.18,1); background:conic-gradient(from -22.5deg, #d8f06a 0 12.5%, #ff785e 12.5% 25%, #9dd9c3 25% 37.5%, #f4c96b 37.5% 50%, #d8f06a 50% 62.5%, #ff785e 62.5% 75%, #9dd9c3 75% 87.5%, #f4c96b 87.5% 100%); }
+    .wheel::after { content:''; position:absolute; inset:50% auto auto 50%; width:33px; height:33px; border-radius:50%; transform:translate(-50%,-50%); background:var(--white); border:7px solid var(--ink); z-index:3; }
+    .wheel-label { position:absolute; left:50%; top:50%; width:58px; min-height:28px; padding:3px 4px; display:flex; align-items:center; justify-content:center; color:var(--ink); background:rgba(255,255,255,.78); border-radius:5px; font-size:9px; line-height:1.3; font-weight:900; text-align:center; word-break:break-all; text-shadow:0 1px 0 rgba(255,255,255,.65); transform-origin:0 0; }
+    .wheel-label:nth-child(1){transform:rotate(-67deg) translate(58px,-50%)} .wheel-label:nth-child(2){transform:rotate(-22deg) translate(58px,-50%)} .wheel-label:nth-child(3){transform:rotate(23deg) translate(58px,-50%)} .wheel-label:nth-child(4){transform:rotate(68deg) translate(58px,-50%)} .wheel-label:nth-child(5){transform:rotate(113deg) translate(58px,-50%)} .wheel-label:nth-child(6){transform:rotate(158deg) translate(58px,-50%)} .wheel-label:nth-child(7){transform:rotate(203deg) translate(58px,-50%)} .wheel-label:nth-child(8){transform:rotate(248deg) translate(58px,-50%)}
+    .pointer { width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-top:20px solid var(--coral); margin-bottom:-9px; z-index:2; filter:drop-shadow(0 2px 1px #a94334); }
+    .spin { border:0; background:var(--coral); color:#fff; border-radius:9px; padding:11px 30px; font-weight:900; cursor:pointer; margin-top:22px; }
+    .spin:disabled { opacity:.6; cursor:wait; }
+    .winner { min-height:35px; color:var(--coral); font-size:14px; font-weight:900; text-align:center; margin-top:14px; }
+    .merchants { margin-top:24px; border-top:1px solid var(--line); padding-top:20px; }
+    .merchants h3 { font-size:14px; margin:0 0 13px; }
+    .merchant-list { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+    .merchant { background:#f7f9f2; padding:12px; border-radius:10px; }
+    .merchant strong { display:block; font-size:12px; margin-bottom:5px; }
+    .merchant span { display:block; color:var(--muted); line-height:1.55; font-size:11px; }
+    footer { color:#9aa59e; text-align:center; font:10px 'DM Mono',monospace; margin-top:30px; }
+    @media (max-width:900px){ .hero,.workspace { grid-template-columns:1fr; gap:24px; } .hero { margin-bottom:24px; } .hero-note { max-width:500px; } .content-grid { grid-template-columns:1fr; } .wheel-wrap { order:-1; } }
+    @media (max-width:560px){ .shell { padding:20px 15px 38px; } header { margin-bottom:24px; } .status { display:none; } h1 { font-size:48px; } .filters,.results { padding:18px; } .dish-list,.merchant-list { grid-template-columns:1fr; } .results-head { flex-direction:column; } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header><div class="brand"><div class="brand-mark">食</div><div>饭点有答案<small>MEAL DECISION ENGINE</small></div></div><div class="status"><i class="dot"></i>本地推理引擎已就绪</div></header>
+    <section class="hero"><div><div class="eyebrow">today's food, decided</div><h1>别纠结了，<br><em>好好吃饭。</em></h1><p>告诉我今天的状态，剩下的交给算法。严格避开忌口、预算和时间雷区，再用转盘替你拍板。</p></div><div class="hero-note">把“想吃点什么”变成一个明确答案。<br><span style="color:var(--muted);font-weight:500">适合午休、放学，也适合下班后的最后一公里。</span></div></section>
+    <section class="workspace">
+      <aside class="panel filters"><div class="panel-title"><h2>今天怎么吃？</h2><span>01 / 09</span></div>
+        <div class="field"><label>口味偏好 <b>味型</b></label><select id="flavor"><option>酸辣开胃</option><option>清淡鲜香</option><option>家常咸香</option><option>酱香浓郁</option><option>清爽少负担</option><option>口味随心</option></select></div>
+        <div class="field"><label>喜欢品类 <b>想吃什么</b></label><select id="category"><option>米饭盖饭</option><option>汤面米线</option><option>面食主食</option><option>肉类菜品</option><option>蔬菜豆腐</option><option>想尝试不同品类</option></select></div>
+        <div class="field"><label>忌口设置 <b>严格避开</b></label><select id="avoid"><option>无明确忌口</option><option>不吃香菜</option><option>不吃辣</option><option>不吃海鲜</option><option>不吃牛肉</option><option>不吃猪肉</option></select></div>
+        <div class="field"><label>就餐地点 <b>配送方式</b></label><select id="place"><option>外卖配送（当前定位）</option><option>到店就餐（附近门店）</option></select></div>
+        <div class="field"><label>分量 <b>人数</b></label><select id="portion"><option>正常标准份</option><option>小份 / 一人食</option><option>大份 / 多人分享</option></select></div>
+        <div class="field"><label>价格预算 <b>单人</b></label><select id="budget"><option>15-25元</option><option>15元以内</option><option>25-40元</option><option>40元以上</option></select></div>
+        <div class="field"><label>饮食搭配 <b>结构</b></label><select id="balance"><option>荤素均衡</option><option>主食优先</option><option>多菜少饭</option><option>全素</option><option>重碳水</option></select></div>
+        <div class="field"><label>健康管理 <b>身体状态</b></label><select id="health"><option>普通随便吃</option><option>减脂控卡</option><option>养胃清淡</option><option>高蛋白</option><option>少辣少油</option></select></div>
+        <div class="field"><label>时间预算 <b>耐心值</b></label><select id="time"><option>快速出餐（30分钟内送达）</option><option>不着急</option><option>可以久等</option></select></div>
+        <button class="run" id="run">开始推理 →</button>
+      </aside>
+      <section class="panel results"><div class="results-head"><div><h2 id="summaryTitle">今天适合一顿酸辣均衡的快餐</h2><p id="summaryText">已根据 7 项条件，为你筛出不踩雷的选择。</p></div><div class="count">8 个转盘候选</div></div>
+        <div class="content-grid"><div class="dish-list" id="dishList"></div><div class="wheel-wrap"><div class="pointer"></div><div class="wheel" id="wheel"></div><button class="spin" id="spin">转一下，今天就它</button><div class="winner" id="winner"></div></div></div>
+        <div class="merchants"><h3>适配商家参考</h3><div class="merchant-list" id="merchantList"></div></div>
+      </section>
+    </section>
+    <footer>FILTER FIRST · DECIDE FASTER · EAT BETTER</footer>
+  </main>
+  <script>
+    const baseDishes = [
+      {name:'番茄肥牛盖饭',desc:'酸甜番茄配嫩滑肥牛，米饭分量刚好。',tags:['荤素均衡','出餐快','15-25元']},
+      {name:'酸辣鸡丝拌面',desc:'酸辣爽口，鸡丝和蔬菜拌在一起很过瘾。',tags:['主食优先','一人食','出餐快']},
+      {name:'照烧鸡腿饭',desc:'嫩鸡腿配西兰花，酱香下饭但不腻。',tags:['标准份','荤素均衡','外卖友好']},
+      {name:'香菇青菜卤肉饭',desc:'卤肉软烂入味，搭配青菜，平价稳妥。',tags:['平价','外卖友好','出餐快']},
+      {name:'虾仁滑蛋饭',desc:'嫩滑鸡蛋配虾仁，清爽又有满足感。',tags:['高蛋白','少油','一人食']},
+      {name:'小炒黄牛肉套餐',desc:'现炒香气足，配时蔬和米饭，饱腹不单调。',tags:['荤素均衡','到店合适','25-40元']},
+      {name:'菌菇鸡汤米线',desc:'热乎清爽的一碗，菌菇和鸡肉都很鲜。',tags:['养胃','清淡','出餐快']},
+      {name:'韩式拌饭',desc:'蔬菜、鸡蛋和牛肉拌匀，口味有层次。',tags:['多菜少饭','一人食','外卖友好']},
+      {name:'蒸蛋肉饼套餐',desc:'软嫩蒸蛋搭配肉饼，温和又扎实。',tags:['养胃','标准份','平价']},
+      {name:'时蔬鸡胸沙拉',desc:'鸡胸肉配多种蔬菜，轻负担也有蛋白质。',tags:['减脂控卡','高蛋白','少油']},
+      {name:'酸汤鱼片饭',desc:'酸爽汤汁配嫩鱼片，开胃又不容易腻。',tags:['酸辣','荤素均衡','25-40元']},
+      {name:'黑椒牛肉意面',desc:'黑椒牛肉配弹牙意面，适合想换口味的一餐。',tags:['主食优先','标准份','外卖友好']},
+      {name:'青椒肉丝盖饭',desc:'家常青椒肉丝配米饭，香而不复杂。',tags:['平价','出餐快','15元以内']},
+      {name:'番茄豆腐煲',desc:'番茄和嫩豆腐热乎入味，清爽下饭。',tags:['全素可选','少油','养胃']},
+      {name:'牛肉蔬菜卷',desc:'牛肉、生菜和全麦饼组合，轻便不漏汤。',tags:['高蛋白','一人食','外卖友好']},
+      {name:'三鲜汤面',desc:'菌菇、青菜和鸡蛋煮成热汤面，温和顺口。',tags:['养胃','15元以内','快速出餐']},
+      {name:'砂锅土豆粉',desc:'热乎弹滑的土豆粉，配肉片和蔬菜更有满足感。',tags:['重碳水','标准份','到店合适']},
+      {name:'铁板鸡排饭',desc:'现煎鸡排配玉米和蔬菜，香气足、分量足。',tags:['高蛋白','到店合适','25-40元']},
+        {name:'蔬菜豆腐便当',desc:'时蔬、豆腐和杂粮饭，清爽轻盈的一盒。',tags:['全素','减脂控卡','外卖友好']},
+        {name:'酸菜肉丝面',desc:'酸菜和肉丝拌入热面，酸香开胃又顶饱。',tags:['酸辣','主食优先','出餐快']},
+        {name:'番茄鸡蛋面',desc:'番茄汤底配嫩鸡蛋，简单热乎，适合一人食。',tags:['清淡','养胃','15元以内']},
+        {name:'红油抄手面',desc:'鲜肉抄手配爽滑面条，香辣过瘾但不拖时间。',tags:['酸辣','一人食','出餐快']},
+        {name:'牛肉汤粉',desc:'清鲜牛肉汤配米粉，饱腹轻松，适合快速解决一餐。',tags:['清淡','高蛋白','快速出餐']},
+        {name:'鸡丝凉面',desc:'鸡丝、黄瓜和凉面拌匀，清爽利落，外卖也方便。',tags:['清爽少负担','一人食','外卖友好']},
+        {name:'麻酱拌面',desc:'浓香麻酱裹住劲道面条，主食满足感很强。',tags:['家常咸香','重碳水','15元以内']},
+        {name:'酸辣粉',desc:'酸辣汤底配红薯粉和花生，开胃又适合单人点餐。',tags:['酸辣','重碳水','一人食']},
+        {name:'西兰花菌菇饭',desc:'西兰花、菌菇和杂粮饭组合，清爽饱腹。',tags:['全素','清淡','外卖友好']},
+        {name:'家常豆腐饭',desc:'嫩豆腐配青椒木耳，家常下饭又不油腻。',tags:['全素','家常咸香','15元以内']},
+        {name:'玉米蔬菜煲',desc:'玉米、胡萝卜和时蔬慢煨，鲜甜轻盈。',tags:['全素','清淡','养胃']},
+        {name:'菌菇杂粮焖饭',desc:'多种菌菇配杂粮饭，香气足，适合一人食。',tags:['全素','清爽少负担','一人食']},
+        {name:'清汤鸡丝面',desc:'清汤配鸡丝和青菜，热乎鲜香，适合快速吃饱。',tags:['清淡','高蛋白','快速出餐']},
+        {name:'凉拌豆腐蔬菜盒',desc:'嫩豆腐搭配玉米、生菜和胡萝卜，清爽方便。',tags:['全素','清爽少负担','外卖友好']}
+    ];
+    const dishMeta = {
+      '番茄肥牛盖饭': {categories:['米饭盖饭','肉类菜品'], flavors:['清淡鲜香','家常咸香']}, '酸辣鸡丝拌面': {categories:['面食主食'], flavors:['酸辣开胃']},
+      '照烧鸡腿饭': {categories:['米饭盖饭','肉类菜品'], flavors:['酱香浓郁','家常咸香']}, '香菇青菜卤肉饭': {categories:['米饭盖饭','肉类菜品'], flavors:['家常咸香','酱香浓郁']},
+      '虾仁滑蛋饭': {categories:['米饭盖饭'], flavors:['清淡鲜香','清爽少负担']}, '小炒黄牛肉套餐': {categories:['肉类菜品','米饭盖饭'], flavors:['家常咸香']},
+      '菌菇鸡汤米线': {categories:['汤面米线'], flavors:['清淡鲜香','清爽少负担']}, '韩式拌饭': {categories:['米饭盖饭'], flavors:['酱香浓郁']},
+      '蒸蛋肉饼套餐': {categories:['肉类菜品','米饭盖饭'], flavors:['清淡鲜香','家常咸香']}, '时蔬鸡胸沙拉': {categories:['蔬菜豆腐','肉类菜品'], flavors:['清爽少负担','清淡鲜香']},
+      '酸汤鱼片饭': {categories:['米饭盖饭','肉类菜品'], flavors:['酸辣开胃']}, '黑椒牛肉意面': {categories:['面食主食','肉类菜品'], flavors:['酱香浓郁']},
+      '青椒肉丝盖饭': {categories:['米饭盖饭','肉类菜品'], flavors:['家常咸香']}, '番茄豆腐煲': {categories:['蔬菜豆腐'], flavors:['清淡鲜香','清爽少负担']},
+      '牛肉蔬菜卷': {categories:['面食主食','肉类菜品'], flavors:['清爽少负担','家常咸香']}, '三鲜汤面': {categories:['汤面米线'], flavors:['清淡鲜香']},
+      '砂锅土豆粉': {categories:['汤面米线','面食主食'], flavors:['家常咸香']}, '铁板鸡排饭': {categories:['米饭盖饭','肉类菜品'], flavors:['家常咸香']},
+      '蔬菜豆腐便当': {categories:['蔬菜豆腐'], flavors:['清爽少负担','清淡鲜香']}, '酸菜肉丝面': {categories:['面食主食'], flavors:['酸辣开胃']},
+      '番茄鸡蛋面': {categories:['汤面米线'], flavors:['清淡鲜香']}, '红油抄手面': {categories:['汤面米线','面食主食'], flavors:['酸辣开胃']},
+      '牛肉汤粉': {categories:['汤面米线'], flavors:['清淡鲜香']}, '鸡丝凉面': {categories:['面食主食'], flavors:['清爽少负担']},
+      '麻酱拌面': {categories:['面食主食'], flavors:['家常咸香']}, '酸辣粉': {categories:['汤面米线'], flavors:['酸辣开胃']},
+      '西兰花菌菇饭': {categories:['蔬菜豆腐'], flavors:['清淡鲜香','清爽少负担']}, '家常豆腐饭': {categories:['蔬菜豆腐'], flavors:['家常咸香']},
+      '玉米蔬菜煲': {categories:['蔬菜豆腐'], flavors:['清淡鲜香','清爽少负担']}, '菌菇杂粮焖饭': {categories:['蔬菜豆腐'], flavors:['清爽少负担','家常咸香']},
+      '清汤鸡丝面': {categories:['汤面米线'], flavors:['清淡鲜香']}, '凉拌豆腐蔬菜盒': {categories:['蔬菜豆腐'], flavors:['清爽少负担','清淡鲜香']}
+    };
+    const $ = id => document.getElementById(id);
+    let options = baseDishes.slice(0,8).map(d => d.name);
+    function render(){
+      const health = $('health').value, place = $('place').value, portion = $('portion').value, time = $('time').value, budget = $('budget').value, balance = $('balance').value;
+      const flavor = $('flavor').value, category = $('category').value, avoid = $('avoid').value;
+      const forbidden = avoid === '不吃香菜' ? ['香菜'] : avoid === '不吃辣' ? ['酸辣','酸汤','青椒','黑椒'] : avoid === '不吃海鲜' ? ['虾','鱼','三鲜'] : avoid === '不吃牛肉' ? ['牛肉','肥牛'] : avoid === '不吃猪肉' ? ['猪肉','卤肉','肉饼'] : [];
+      const wanted = [];
+      if(flavor === '酸辣开胃') wanted.push('酸辣','酸汤');
+      if(flavor === '清淡鲜香') wanted.push('清淡','鲜','少油');
+      if(flavor === '家常咸香') wanted.push('家常','平价');
+      if(flavor === '酱香浓郁') wanted.push('酱香','照烧','卤肉');
+      if(flavor === '清爽少负担') wanted.push('清淡','少油','减脂控卡');
+      if(category === '汤面米线' || category === '面食主食') wanted.push('面','意面','米线','粉');
+      if(category === '米饭盖饭') wanted.push('盖饭','饭');
+      if(category === '蔬菜豆腐') wanted.push('全素','豆腐','蔬菜');
+      if(category === '肉类菜品') wanted.push('高蛋白','肉','鸡','牛');
+      if(health.includes('减脂')) wanted.push('减脂控卡','少油','高蛋白');
+      if(health.includes('养胃')) wanted.push('养胃','清淡');
+      if(health.includes('高蛋白')) wanted.push('高蛋白');
+      if(health.includes('少辣少油')) wanted.push('少油','清淡');
+      if(balance === '全素') wanted.push('全素');
+      if(balance === '主食优先' || balance === '重碳水') wanted.push('主食优先','重碳水');
+      if(balance === '多菜少饭' || balance === '荤素均衡') wanted.push(balance);
+      if(portion.includes('小份')) wanted.push('一人食');
+      if(portion.includes('大份')) wanted.push('标准份','分量足');
+      if(budget.includes('15元以内')) wanted.push('15元以内','平价');
+      if(budget.includes('15-25')) wanted.push('15-25元','平价');
+      if(budget.includes('25-40')) wanted.push('25-40元');
+      if(place.includes('外卖')) wanted.push('外卖友好');
+      if(place.includes('到店')) wanted.push('到店合适');
+      if(time.includes('快速')) wanted.push('出餐快','快速出餐');
+      let dishes = baseDishes.filter(d => !forbidden.some(word => d.name.includes(word) || d.desc.includes(word)));
+        if(category !== '想尝试不同品类') {
+          dishes = dishes.filter(d => dishMeta[d.name].categories.includes(category));
+        }
+      if(balance === '全素') dishes = dishes.filter(d => d.tags.includes('全素') || d.name.includes('豆腐') || d.name.includes('蔬菜'));
+      dishes = dishes.map((dish, index) => {
+        const meta = dishMeta[dish.name];
+        const categoryScore = category === '想尝试不同品类' ? 0 : meta.categories.includes(category) ? 24 : 0;
+        const flavorScore = flavor === '口味随心' ? 0 : meta.flavors.includes(flavor) ? 18 : 0;
+        const keywordScore = wanted.reduce((score, word) => score + (dish.name.includes(word) || dish.desc.includes(word) || dish.tags.some(tag => tag.includes(word)) ? 2 : 0), 0);
+        return {dish, score: categoryScore + flavorScore + keywordScore - index * 0.01};
+      }).sort((a,b) => b.score - a.score).map(item => item.dish);
+      if(dishes.length < 8 && category === '想尝试不同品类') dishes = [...dishes, ...baseDishes.filter(d => !dishes.includes(d) && !forbidden.some(word => d.name.includes(word)))];
+      dishes = dishes.slice(0,8);
+      options = dishes.map(d => d.name);
+      $('dishList').innerHTML = dishes.slice(0,8).map(d => `<article class="dish"><h3>${d.name}</h3><p>${d.desc}</p><div class="tags">${d.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div></article>`).join('');
+      $('wheel').innerHTML = options.map((o,i) => `<span class="wheel-label">${o}</span>`).join('');
+      const pace = time.includes('快速') ? '快手' : '不赶时间';
+      $('summaryTitle').textContent = `${pace}模式 · ${health.includes('普通') ? '今天吃点满足的' : health.replace('管理','')} `;
+      $('summaryText').textContent = `${place.includes('外卖') ? '外卖配送' : '附近到店'}，${portion.split(' / ')[0]}，${budget}，${balance}，已筛掉不适配选项。`;
+      const merchantTypes = place.includes('外卖') ? [['连锁盖饭店','真功夫·同类店','15-25元｜打包稳，约30分钟内'],['轻食便当店','轻食研究所·同类店','25-40元｜可选低脂，高蛋白'],['地方小炒店','家常小炒·同类店','15-25元｜标准份，配送友好']] : [['社区快餐店','附近家常菜·同类店','15-25元｜现做现吃，一人食'],['商场简餐店','商场简餐·同类店','25-40元｜座位舒适，适合午休'],['面饭小馆','街坊面饭馆·同类店','15元以内｜出餐快，分量足']];
+      $('merchantList').innerHTML = merchantTypes.map(m => `<div class="merchant"><strong>${m[0]} · ${m[1]}</strong><span>${m[2]}</span></div>`).join('');
+      $('winner').textContent = '';
+    }
+    $('run').addEventListener('click', render);
+    $('spin').addEventListener('click', () => { const wheel=$('wheel'), spin=$('spin'); spin.disabled=true; $('winner').textContent='正在替你拍板...'; const index=Math.floor(Math.random()*options.length); wheel.style.transform=`rotate(${1440 + index*45 + Math.floor(Math.random()*30)}deg)`; setTimeout(()=>{ $('winner').textContent=`今天就吃：${options[index]}`; spin.disabled=false; },4300); });
+    render();
+  </script>
+</body>
+</html>
